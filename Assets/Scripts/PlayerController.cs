@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        rb.freezeRotation = true;
+
         if(playerCamera == null ) playerCamera = GetComponentInChildren<Camera>().transform;
     }
     void Update()
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
         forwardInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
+        //xoay camera
         xRotation -= mouseYInput * mouseSensitivity * Time.deltaTime;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -37,8 +41,7 @@ public class PlayerController : MonoBehaviour
         //Kiem tra cham dat
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
 
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+        //Xoay trai phai
         transform.Rotate(Vector3.up * mouseXInput * mouseSensitivity * Time.deltaTime);
 
         //xu li nhay
@@ -55,5 +58,14 @@ public class PlayerController : MonoBehaviour
             else
                 Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    void FixedUpdate()
+    {
+        //Tinh toan huong di chuyen
+        Vector3 moveDirection = transform.forward * forwardInput + transform.right * horizontalInput;
+
+        //movedirX*speed, movedirZ*speed -> huong di theo truc x va z ; rb.linearVelocity.y -> theo trong luc va nhay
+        rb.linearVelocity = new Vector3(moveDirection.x * speed, rb.linearVelocity.y, moveDirection.z * speed);
     }
 }
