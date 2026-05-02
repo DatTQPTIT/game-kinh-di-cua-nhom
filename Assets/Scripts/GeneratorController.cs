@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GeneratorController : MonoBehaviour
 {
@@ -9,6 +11,11 @@ public class GeneratorController : MonoBehaviour
     [SerializeField] private GameObject houseLight;
     [SerializeField] private Transform playerPosition;
 
+
+    [SerializeField] private GameObject repairUI;
+    [SerializeField] private Image repairProgressBar;
+    [SerializeField] private GameObject repairText;
+
     private float currentPower;
     private float currentRepairTime;
     private bool isPowerOn = true;
@@ -17,7 +24,11 @@ public class GeneratorController : MonoBehaviour
     void Start()
     {
         currentPower = maxPowerTime;
+        isPowerOn = true;
         SetLights(true);
+
+        if(repairUI != null ) repairUI.SetActive(false);
+        if(repairText != null) repairText.SetActive(false);
     }
 
     void Update()
@@ -45,13 +56,30 @@ public class GeneratorController : MonoBehaviour
 
     void RepairInteraction()
     {
+        if (isPowerOn)
+        {
+            if (repairUI != null) repairUI.SetActive(false);
+            if (repairText != null) repairText.SetActive(false);
+            currentRepairTime = 0f;
+
+            return;
+        }
+
         float distance = Vector3.Distance(transform.position, playerPosition.position);
-        if (!isPowerOn && distance <= repairDistance)
+
+        if (distance <= repairDistance)
         {
             if (Input.GetKey(KeyCode.E))
             {
-                isRepairing = true;
+                if (repairUI != null) repairUI.SetActive(true);
+                if (repairText != null) repairText.SetActive(false);
+
                 currentRepairTime += Time.deltaTime;
+
+                if (repairProgressBar != null)
+                {
+                    repairProgressBar.fillAmount = currentRepairTime / repairTime;
+                }
 
                 if (currentRepairTime >= repairTime)
                 {
@@ -60,9 +88,18 @@ public class GeneratorController : MonoBehaviour
             }
             else
             {
-                isRepairing = false;
+                if (repairUI != null) repairUI.SetActive(false);
+                if (repairText != null) repairText.SetActive(true);
+
                 currentRepairTime = 0f;
+                if (repairProgressBar != null) repairProgressBar.fillAmount = 0f;
             }
+        }
+        else
+        {
+            if (repairUI != null) repairUI.SetActive(false);
+            if (repairText != null) repairText.SetActive(false);
+            currentRepairTime = 0f;
         }
     }
 
@@ -72,7 +109,10 @@ public class GeneratorController : MonoBehaviour
         isRepairing = false;
         currentPower = maxPowerTime;
         currentRepairTime = 0f;
-        SetLights(true); 
+        SetLights(true);
+
+        if (repairUI != null) repairUI.SetActive(false);
+        if (repairText != null) repairText.SetActive(false);
     }
 
     void SetLights(bool state)
