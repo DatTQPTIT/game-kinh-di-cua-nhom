@@ -3,10 +3,21 @@ using UnityEngine;
 public class FlashlightDetector : MonoBehaviour
 {
     [SerializeField] private GameObject flashlightLight;
+    private Light lightComp;
+
+    void Start()
+    {
+        if(flashlightLight != null)
+        {
+            lightComp = flashlightLight.GetComponent<Light>();
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if(flashlightLight != null && flashlightLight.activeSelf)
+        bool isLampOn = flashlightLight != null && flashlightLight.activeInHierarchy && (lightComp == null || lightComp .enabled);
+
+        if(isLampOn)
         {
             if (other.CompareTag("Enemy"))
             {
