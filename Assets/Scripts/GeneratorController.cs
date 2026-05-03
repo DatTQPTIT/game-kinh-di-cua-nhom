@@ -18,7 +18,7 @@ public class GeneratorController : MonoBehaviour
 
     private float currentPower;
     private float currentRepairTime;
-    private bool isPowerOn = true;
+    public static bool isPowerOn = true;
     private bool isRepairing = false;
 
     void Start()
