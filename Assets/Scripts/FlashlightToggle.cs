@@ -16,6 +16,11 @@ public class FlashlightToggle : MonoBehaviour
     {
         currentBattery = maxBattery;
 
+        if (flashlight != null)
+        {
+            flashlight.enabled = false; 
+        }
+
         if (batterySlider != null)
         {
             batterySlider.maxValue = maxBattery;
