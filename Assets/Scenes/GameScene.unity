@@ -6790,6 +6790,10 @@ PrefabInstance:
       value: Smoke
       objectReference: {fileID: 0}
     - target: {fileID: 7246986634358014231, guid: b437617bb5f01314e92a39d942a9ca3a, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246986634358014231, guid: b437617bb5f01314e92a39d942a9ca3a, type: 3}
       propertyPath: simulationSpeed
       value: 0.16
       objectReference: {fileID: 0}
@@ -6803,7 +6807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246986634358014231, guid: b437617bb5f01314e92a39d942a9ca3a, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
-      value: 0.13725491
+      value: 0.11764706
       objectReference: {fileID: 0}
     - target: {fileID: 7246986634358014231, guid: b437617bb5f01314e92a39d942a9ca3a, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -8200,13 +8204,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711959774}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.044803586, y: 0.015037669, z: -0.7084571, w: 0.7041698}
   m_LocalPosition: {x: 116.68103, y: 0, z: 60}
   m_LocalScale: {x: 600, y: 600, z: 600}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.395, y: 4.861, z: -90.449}
 --- !u!1 &1757344333
 GameObject:
   m_ObjectHideFlags: 0
