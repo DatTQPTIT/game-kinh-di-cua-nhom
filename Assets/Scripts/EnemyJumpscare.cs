@@ -1,31 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class EnemyJumpscare : MonoBehaviour
 {
-    [Header("Cài đặt")]
-    public float detectRange = 1.1f;         // Sát mức 1.0 bạn muốn
-    public float animationDuration = 2.0f;
-    public string jumpscareTrigger = "Jumpscare";
+    public float detectRange = 1.5f;
+    public float jumpscareDuration = 2.0f;
+    public string loseSceneName = "LoseScene";
 
-    [Header("Tham chiếu")]
+    public GameObject jumpscareUI; 
+    public AudioSource jumpscareAudio; 
     public Transform player;
-    public Transform playerCamera;
 
-    private Animator anim;
     private bool isScaring = false;
-    private UnityEngine.AI.NavMeshAgent agent;
-
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-        if (anim == null) anim = GetComponentInChildren<Animator>();
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-
-        if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
-        if (playerCamera == null && player != null) playerCamera = player.GetComponentInChildren<Camera>().transform;
-    }
 
     void Update()
     {
@@ -33,62 +21,30 @@ public class EnemyJumpscare : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        // Debug để bạn theo dõi khoảng cách hiện tại trong Console
-        // Debug.Log("Khoảng cách: " + distance);
-
         if (distance <= detectRange)
         {
-            StartCoroutine(TriggerJumpscare());
+            StartCoroutine(ShowImageJumpscare());
         }
     }
 
-    IEnumerator TriggerJumpscare()
+    IEnumerator ShowImageJumpscare()
     {
         isScaring = true;
-
-        // 1. ĐÓNG BĂNG TỨC THÌ
-        if (agent != null)
-        {
-            agent.isStopped = true;
-            agent.enabled = false;
-        }
-
         PlayerController move = player.GetComponent<PlayerController>();
         if (move != null) move.enabled = false;
 
-        // Khóa vị trí tuyệt đối (không cho trượt vật lý)
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        if (rb != null)
+        if (jumpscareUI != null)
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.isKinematic = true;
+            jumpscareUI.SetActive(true);
         }
 
-        // 2. XOAY QUÁI ĐỐI DIỆN PLAYER
-        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-
-        // 3. KÍCH HOẠT ANIMATION
-        anim.SetTrigger(jumpscareTrigger);
-
-        // 4. KHÓA GÓC NHÌN CAMERA SÁT MẶT
-        float elapsed = 0;
-        while (elapsed < animationDuration)
+        if (jumpscareAudio != null)
         {
-            // Nhắm vào đầu quái (1.6m là tầm mắt)
-            Vector3 targetHead = transform.position + Vector3.up * 1.6f;
-            Vector3 dir = targetHead - playerCamera.position;
-
-            if (dir != Vector3.zero)
-            {
-                Quaternion targetRot = Quaternion.LookRotation(dir);
-                // Xoay Camera cực nhanh và khóa chặt không cho quay chuột
-                playerCamera.rotation = Quaternion.Slerp(playerCamera.rotation, targetRot, Time.deltaTime * 20f);
-            }
-
-            elapsed += Time.deltaTime;
-            yield return null;
+            jumpscareAudio.Play();
         }
 
-        SceneManager.LoadScene("LoseScene");
+        yield return new WaitForSeconds(jumpscareDuration);
+
+        SceneManager.LoadScene(loseSceneName);
     }
 }
