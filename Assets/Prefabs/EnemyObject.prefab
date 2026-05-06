@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4527717006111032132}
   - component: {fileID: 4038642960896030162}
   - component: {fileID: 136789720366788253}
+  - component: {fileID: 8106666756721343011}
+  - component: {fileID: 2538050501575898048}
   m_Layer: 0
   m_Name: EnemyObject
   m_TagString: Enemy
@@ -151,7 +153,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -181,6 +183,42 @@ MonoBehaviour:
   wanderRadius: 20
   wanderTimer: 5
   killDistance: 1.5
+--- !u!114 &8106666756721343011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013733705388643969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f569623f53c35469a52f87b17bd5b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpscareTime: 2
+  loseSceneName: LoseScene
+  jumpscareSound: {fileID: 0}
+--- !u!135 &2538050501575898048
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013733705388643969}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2727911090558439840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -263,10 +301,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 2.5
-  animationDuration: 2
+  jumpscareDuration: 2
   loseSceneName: LoseScene
+  jumpscareUI: {fileID: 0}
+  jumpscareAudio: {fileID: 0}
   player: {fileID: 796582470389651365, guid: 39523c6f6273ce94a84350b6a272939f, type: 3}
-  playerCamera: {fileID: 322842393616473271, guid: 5b74b9b5981859d4882819ab3e28bfcb, type: 3}
 --- !u!4 &9062209870978551526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6347845055732162374, guid: 1f767fa48db25104c96a9670cc753b1b, type: 3}

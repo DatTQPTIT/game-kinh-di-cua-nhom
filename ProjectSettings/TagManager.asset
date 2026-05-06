@@ -11,10 +11,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Minimap_Static
   - Water
   - UI
-  - 
+  - Minimap_Player
   - 
   - 
   - 
